@@ -1,85 +1,65 @@
-An autoencoder is a neural network that learns to reconstruct its input. It has two parts:
+🚨 Detecting Anomalies in Sensor Data with Autoencoders 🔧
 
-1. Encoder >
-Learns to compress the input into a lower-dimensional representation (called the “latent space”)
-Think of it as extracting the most essential features.
+An autoencoder is a type of neural network that learns to reconstruct its input by compressing it into a smaller representation — and then decompressing it back.
 
-2. Decoder >
-Learns to rebuild the input from that compressed representation.
-The goal is to make the reconstructed output as close as possible to the original input
+It has two core components:
 
-Here’s the trick:
-The autoencoder is trained only on normal data (e.g., normal sensor readings)
-It learns to efficiently compress and reconstruct this kind of data
-When it sees anomalous data (something it wasn’t trained on), the encoder can’t compress it well
-The decoder then fails to reconstruct it accurately → high reconstruction error
+🔹 Encoder — Compresses the input into a low-dimensional latent space, capturing only the most essential patterns.
+🔹 Decoder — Reconstructs the input from this compressed form as accurately as possible.
 
+💡 Here's the trick:
+The autoencoder has been trained only on normal sensor readings.
+It learns to reconstruct these inputs with very low error.
 
-Compression	Reduces dimensionality and noise from normal data
-Feature extraction	Learns to represent only patterns that are common
-Filtering	Cannot capture unknown/rare patterns (e.g., anomalies) well
+But when it sees something abnormal — something it wasn’t trained on — the encoder can't compress it effectively, and the decoder reconstructs it poorly.
 
+➡️ This results in a high reconstruction error, which we use to flag anomalies.
 
----------------------------------------------------------------------
-EXAMPLE
-Let’s say you feed this data into the encoder:
-[24.7°C, 0.52 g-force]  ← Normal
+🧠 Latent Space
+The latent space is the compressed internal representation the encoder learns.
 
-The encoder learns to summarize it as:
-[0.3, -0.1]  ← Latent vector
+Think of it as:
 
-Now if you feed in an anomaly:
-[30.5°C, 1.00 g-force]  ← Abnormal
+-A summary of the input
 
-It gets compressed into something poorly representative like:
-[1.1, 0.9]  ← Unfamiliar to the decoder
+-A feature map of common patterns
 
-Result: the decoder reconstructs it badly → high reconstruction error → flagged as anomaly
+-A reduced-dimensional fingerprint of your data
 
----------------------------------------------------------------------
+Example:
 
-LATENT SPACE
-
-The latent space is the compressed representation the encoder produces.
-Think of it like:
-
-A summary of the input
-A feature map that captures only the most important characteristics
-A reduced dimensionality version of your data
-
+This is the model:
 self.encoder = nn.Sequential(
     nn.Linear(input_dim, 16),
     nn.ReLU(),
-    nn.Linear(16, 4),     # <--- This is the latent space (size 4)
+    nn.Linear(16, 4)  # This 4D vector is the latent space
 )
-So each input becomes a 4D vector in latent space.
+Normal data lands in dense clusters in this space.
+Anomalies land outside, making them easy to spot with PCA or t-SNE projections.
 
-Normal data gets mapped to dense clusters
-Anomalous data often lands far outside those clusters
-You can visualize these differences using 2D or 3D projections (e.g., t-SNE, PCA)
+📊 Real-World Example
+Input: [24.7°C, 0.52 g-force] → Encoded: [0.3, -0.1] (normal)
+Input: [30.5°C, 1.00 g-force] → Encoded: [1.1, 0.9] (anomalous)
+⬇️
+The second input reconstructs poorly → high error → anomaly flagged
 
----------------------------------------------------------------------
-In this project: 
+✅ In This Project:
+🛠️ Autoencoder for Sensor Data Anomaly Detection
 
-Autoencoder for Sensor Data
-Train the autoencoder on normal operating data
-It learns to reconstruct those inputs with low error
-During inference, it struggles to reconstruct abnormal (unseen) data
-Use the reconstruction error to flag anomalies
+Train on normal operating data
 
-Preprocessing
-Normalize the features (e.g., MinMaxScaler)
-Create sequences (if it's time series)
-Or use as tabular rows (if each row is independent)
+Detect anomalies via reconstruction error
 
-Model
+Use MinMaxScaler for normalization
 
-Train on Normal Data Only
-Loss: nn.MSELoss()
-Optimizer: Adam
+Use MSELoss + Adam optimizer
 
+Flag anomalies above the 95th percentile error threshold
 
-Detect Anomalies
-Compute reconstruction error:
-Set a threshold (e.g., 95th percentile)
-Flag points above threshold as anomalies
+👨‍💻 Code available here:
+🔗 github.com/jacoopec/DeepLearning
+
+🔍 Curious about how the latent space looks? Visualizing it with PCA reveals just how clearly the model separates normal vs. anomalous patterns.
+
+Let me know what you think — or feel free to fork the repo and try it on your own sensor data!
+#DeepLearning #PyTorch #Autoencoder #AnomalyDetection #SensorData #LatentSpace #MachineLearning #TimeSeries #AIProjects

@@ -1,0 +1,30 @@
+In deep learning, optimizers are algorithms that adjust the model's weights to minimize the loss function. 
+They drive the learning process during training.
+Here’s a breakdown of the most widely used optimizers:
+
+Optimizers
+---------------------------------
+1. Gradient Descent (GD)
+Updates weights using the entire dataset.
+Rarely used in practice due to computational cost.
+Update Rule:
+w = w − η ⋅ ∇L(w)
+---------------------------------
+2. Stochastic Gradient Descent (SGD)
+Updates weights per data sample (or mini-batch).
+Simple but can be noisy or slow to converge.
+Lightweight and often used with momentum.
+---------------------------------
+3. SGD with Momentum
+Adds a velocity term to smooth updates and escape local minima.
+
+---------------------------------
+4. Adagrad
+Adapts learning rate individually per parameter based on past gradients.
+Good for sparse data (e.g., NLP).
+Problem: Learning rate shrinks too much over time.
+---------------------------------
+5. Adam (Adaptive Moment Estimation)
+✅ The most popular optimizer in deep learning today.
+Combines ideas from Momentum and RMSprop.
+Maintains running averages of both gradient (1st moment) and squared gradient (2nd moment).

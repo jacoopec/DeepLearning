@@ -1,0 +1,26 @@
+A Variational Autoencoder (VAE) is a type of autoencoder designed not just to reconstruct data but also to learn a meaningful, continuous latent space that can be used to generate new data.
+
+Core Idea of a VAE
+In a regular autoencoder:
+
+The encoder maps input 𝑥 to a deterministic latent vector 𝑧
+
+The decoder reconstructs x from 𝑧.
+
+In a VAE:
+
+The encoder maps input x to a distribution (mean and variance) over the latent space:
+
+z∼N(μ(x),σ(x) ^ 2)
+The decoder then reconstructs x from a sampled 𝑧
+
+✨ This makes the latent space smooth and generative, so you can sample from it to create new images.
+
+
+Encoder outputs two things:
+Mean vector 𝜇
+
+Autoencoder              	              VAE
+Learns latent features	         Learns a probabilistic latent space
+Can reconstruct	                Can generate new samples
+Discontinuous latent space	    Smooth, interpretable latent space

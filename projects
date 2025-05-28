@@ -32,3 +32,30 @@ speed (km/h)
 lap_time (sec)
 driver_input (for RL or profiling)
 fault_code (optional for failure prediction)
+
+
+
+
+
+
+
+
+Project Ideas for Classification
+1. Image Classification — CIFAR-10
+Dataset: 60,000 color images in 10 classes (airplane, cat, truck, etc.)
+
+Why it's great: Small enough to train quickly, popular for learning.
+
+PyTorch-ready: Available in torchvision.datasets
+
+2. Tabular Data Classification — Titanic Survival
+Dataset: Titanic passenger info (age, class, fare) → predict survival
+
+Why it's great: Great for learning feature preprocessing + model structure.
+
+PyTorch aspect: You learn how to build datasets and dataloaders manually.
+
+3. Time-Series Classification — Human Activity Recognition
+Dataset: Smartphone sensor data → predict activity (walking, sitting, etc.)
+Why it's great: Shows how to handle sequence/time-based inputs.
+PyTorch challenge: Learn how to work with LSTM or 1D CNNs.
