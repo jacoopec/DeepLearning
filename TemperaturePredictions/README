@@ -1,8 +1,65 @@
-Feature	Description
-hidden_size=64	More capacity to learn patterns
-num_layers=2	A stacked LSTM captures more complex sequences
-Dropout(0.2)	Prevents overfitting
-fc1 → fc2	Deeper fully connected layer adds learning power
+🚨 Detecting Anomalies in Sensor Data with Autoencoders 🔧
 
+An autoencoder is a type of neural network that learns to reconstruct its input by compressing it into a smaller representation — and then decompressing it back.
 
-LSTM models learn patterns over time, so you must format your data as sliding windows of time steps.
+It has two core components:
+
+🔹 Encoder — Compresses the input into a low-dimensional latent space, capturing only the most essential patterns.
+🔹 Decoder — Reconstructs the input from this compressed form as accurately as possible.
+
+💡 Here's the trick:
+The autoencoder has been trained only on normal sensor readings.
+It learns to reconstruct these inputs with very low error.
+
+But when it sees something abnormal — something it wasn’t trained on — the encoder can't compress it effectively, and the decoder reconstructs it poorly.
+
+➡️ This results in a high reconstruction error, which we use to flag anomalies.
+
+🧠 Latent Space
+The latent space is the compressed internal representation the encoder learns.
+
+Think of it as:
+
+-A summary of the input
+
+-A feature map of common patterns
+
+-A reduced-dimensional fingerprint of your data
+
+Example:
+
+This is the model:
+self.encoder = nn.Sequential(
+    nn.Linear(input_dim, 16),
+    nn.ReLU(),
+    nn.Linear(16, 4)  # This 4D vector is the latent space
+)
+Normal data lands in dense clusters in this space.
+Anomalies land outside, making them easy to spot with PCA or t-SNE projections.
+
+📊 Real-World Example
+Input: [24.7°C, 0.52 g-force] → Encoded: [0.3, -0.1] (normal)
+Input: [30.5°C, 1.00 g-force] → Encoded: [1.1, 0.9] (anomalous)
+⬇️
+The second input reconstructs poorly → high error → anomaly flagged
+
+✅ In This Project:
+🛠️ Autoencoder for Sensor Data Anomaly Detection
+
+Train on normal operating data
+
+Detect anomalies via reconstruction error
+
+Use MinMaxScaler for normalization
+
+Use MSELoss + Adam optimizer
+
+Flag anomalies above the 95th percentile error threshold
+
+👨‍💻 Code available here:
+🔗 github.com/jacoopec/DeepLearning
+
+🔍 Curious about how the latent space looks? Visualizing it with PCA reveals just how clearly the model separates normal vs. anomalous patterns.
+
+Let me know what you think — or feel free to fork the repo and try it on your own sensor data!
+#DeepLearning #PyTorch #Autoencoder #AnomalyDetection #SensorData #LatentSpace #MachineLearning #TimeSeries #AIProjects
