@@ -1,0 +1,85 @@
+An autoencoder is a neural network that learns to reconstruct its input. It has two parts:
+
+1. Encoder >
+Learns to compress the input into a lower-dimensional representation (called the “latent space”)
+Think of it as extracting the most essential features.
+
+2. Decoder >
+Learns to rebuild the input from that compressed representation.
+The goal is to make the reconstructed output as close as possible to the original input
+
+Here’s the trick:
+The autoencoder is trained only on normal data (e.g., normal sensor readings)
+It learns to efficiently compress and reconstruct this kind of data
+When it sees anomalous data (something it wasn’t trained on), the encoder can’t compress it well
+The decoder then fails to reconstruct it accurately → high reconstruction error
+
+
+Compression	Reduces dimensionality and noise from normal data
+Feature extraction	Learns to represent only patterns that are common
+Filtering	Cannot capture unknown/rare patterns (e.g., anomalies) well
+
+
+---------------------------------------------------------------------
+EXAMPLE
+Let’s say you feed this data into the encoder:
+[24.7°C, 0.52 g-force]  ← Normal
+
+The encoder learns to summarize it as:
+[0.3, -0.1]  ← Latent vector
+
+Now if you feed in an anomaly:
+[30.5°C, 1.00 g-force]  ← Abnormal
+
+It gets compressed into something poorly representative like:
+[1.1, 0.9]  ← Unfamiliar to the decoder
+
+Result: the decoder reconstructs it badly → high reconstruction error → flagged as anomaly
+
+---------------------------------------------------------------------
+
+LATENT SPACE
+
+The latent space is the compressed representation the encoder produces.
+Think of it like:
+
+A summary of the input
+A feature map that captures only the most important characteristics
+A reduced dimensionality version of your data
+
+self.encoder = nn.Sequential(
+    nn.Linear(input_dim, 16),
+    nn.ReLU(),
+    nn.Linear(16, 4),     # <--- This is the latent space (size 4)
+)
+So each input becomes a 4D vector in latent space.
+
+Normal data gets mapped to dense clusters
+Anomalous data often lands far outside those clusters
+You can visualize these differences using 2D or 3D projections (e.g., t-SNE, PCA)
+
+---------------------------------------------------------------------
+In this project: 
+
+Autoencoder for Sensor Data
+Train the autoencoder on normal operating data
+It learns to reconstruct those inputs with low error
+During inference, it struggles to reconstruct abnormal (unseen) data
+Use the reconstruction error to flag anomalies
+
+Preprocessing
+Normalize the features (e.g., MinMaxScaler)
+Create sequences (if it's time series)
+Or use as tabular rows (if each row is independent)
+
+Model
+
+Train on Normal Data Only
+Loss: nn.MSELoss()
+Optimizer: Adam
+
+
+Detect Anomalies
+Compute reconstruction error:
+Set a threshold (e.g., 95th percentile)
+Flag points above threshold as anomalies

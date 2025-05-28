@@ -1,0 +1,12 @@
+Mean Squared Error (MSE) Loss
+Used for regression problems — like temperature prediction.
+
+📐 Formula:
+MSE = 1/𝑛   *  ∑  1 / 𝑛 ( 𝑦𝑖  −  𝑦^𝑖 ) ^ 2
+
+ Measures how far predictions are from the true values
+Penalizes larger errors more
+
+
+
+

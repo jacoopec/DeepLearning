@@ -1,0 +1,8 @@
+Feature	Description
+hidden_size=64	More capacity to learn patterns
+num_layers=2	A stacked LSTM captures more complex sequences
+Dropout(0.2)	Prevents overfitting
+fc1 → fc2	Deeper fully connected layer adds learning power
+
+
+LSTM models learn patterns over time, so you must format your data as sliding windows of time steps.
