@@ -1,0 +1,25 @@
+Exploring Variational Autoencoders with Tiny Car Images: A Hands-On Experiment
+Have you ever wondered how machines can generate new images after learning from just a few examples? I recently explored this by building a Variational Autoencoder (VAE) — a type of neural network designed to learn the essence of images, and even generate new ones.
+
+What’s a Variational Autoencoder?
+A VAE is a special kind of autoencoder used in unsupervised learning. While a standard autoencoder compresses and reconstructs data, a VAE goes further:
+It learns not just how to reconstruct, but how to model a distribution of the input data in a compressed latent space.
+Once trained, you can sample from this latent space to generate new images that resemble the training set.
+In short, a VAE learns to imagine!
+
+My Experiment
+For this project, I used very small grayscale images of cars — just 30×60 pixels each. Here’s what I did:
+Built a VAE in PyTorch, parameterized to support grayscale or RGB images at any resolution.
+Trained the model on a small custom dataset of car images.
+Sampled from the latent space to generate new images that resemble cars — images the model had never seen before.
+Despite the simplicity and limited dataset, the VAE was able to reconstruct patterns and generate new blurry, but interesting, shapes that looked somewhat like cars.
+What I Learned
+VAEs are powerful tools for understanding and generating data distributions.
+Even a small dataset can produce meaningful results with the right approach.
+The output was far from perfect — but seeing a neural network generate something from random noise is truly rewarding.
+Next Steps
+I plan to:
+Use higher-resolution images and a larger dataset.
+Experiment with RGB color channels.
+Possibly explore conditional VAEs to generate specific types of vehicles.
+Use a more powerful support for my experiments.
